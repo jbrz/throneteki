@@ -10,11 +10,15 @@ import ReduxToastr from 'react-redux-toastr';
 
 import version from '../version.js';
 
-Raven.config('https://f5286cd580bf46898e7180c7a46de2f6@sentry.io/123019', { release: version}).install();
+Raven.config('https://f5286cd580bf46898e7180c7a46de2f6@sentry.io/123019', { release: version }).install();
 
 const store = configureStore();
 
 store.dispatch(navigate(window.location.pathname, window.location.search));
+
+window.onpopstate = function(e) {
+    store.dispatch(navigate(e.target.location.pathname));
+};
 
 if(typeof user !== 'undefined') {
     store.dispatch(login(user, authToken, user.admin));
