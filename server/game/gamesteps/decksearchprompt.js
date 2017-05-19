@@ -76,6 +76,7 @@ class DeckSearchPrompt extends UiPrompt {
         if(this.properties.numCards) {
             return this.choosingPlayer.searchDrawDeck(this.properties.numCards, card => this.checkCardCondition(card));
         }
+
         return this.choosingPlayer.searchDrawDeck(card => this.checkCardCondition(card));
     }
 
@@ -101,6 +102,12 @@ class DeckSearchPrompt extends UiPrompt {
 
         if(!card) {
             return false;
+        }
+
+        if(this.properties.numToSelect !== undefined && this.properties.numToSelect > 1) {
+            this.properties.numToSelect--;
+
+            return;
         }
 
         this.selectAndShuffle(player, card);
